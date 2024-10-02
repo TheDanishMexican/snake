@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.grid-container {
+    margin-top: 3vh;
+}
+
+td {
+    border: 1px solid black;
+    padding: 15px;
+    background-color: rgb(52, 67, 80);
+}
