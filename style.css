@@ -14,3 +14,11 @@ td {
     padding: 15px;
     background-color: rgb(52, 67, 80);
 }
+
+.snake {
+    background-color: #6b6;
+}
+
+.food {
+    background-color: #cc0;
+}

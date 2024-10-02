@@ -1,8 +1,7 @@
 import * as controller from './controller.js';
 import Queue from './queue.js';
 
-const player = { row: 5, column: 5 };
-const grid = createModel(20, 20);
+const model = createModel(20, 20);
 
 export function start() {
     console.log("Model started");
@@ -25,5 +24,17 @@ export function createModel(rows, columns) {
 }
 
 export function writeToCell(row, column, value) {
-    grid[row][column] = value;
+    model[row][column] = value;
+}
+
+export function readFromCell(row, column) {
+    return model[row][column];
+}
+
+export function dump() {
+    console.table(model);
+}
+
+export function tick() {
+    controller.tick();
 }
