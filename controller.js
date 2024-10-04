@@ -1,91 +1,119 @@
-import * as model from "./model.js";
-import * as view from "./view.js";
+import * as model from './model.js';
+import * as view from './view.js';
 
 window.addEventListener("load", start);
 
-let direction = 'left';
-const rows = 20;
-const columns = 20;
-const player = {
-    row: 9,
-    col: 9
-};
+let currentDirection = 'right';
+let nextDirection = currentDirection;
 
-function start() {
-    console.log("Controller started");
-    model.start();
-    view.start(20, 20);
+export function start() {
     window.view = view;
     window.model = model;
 
-    writeToCell(player.row, player.col, 1);
+    console.log("Controller started");
+    model.start();
+    view.start(20, 20);
+
+    const queue = getQueue();
+    let current = queue.head;
+
+    while (current) {
+        writeToCell(current.data.row, current.data.column, 1);
+        current = current.next;
+    }
+
     displayBoard(model);
 
     document.addEventListener('keydown', (event) => {
         switch (event.key) {
             case 'ArrowDown':
-                direction = 'down';
-
+                if (currentDirection !== 'up') {
+                    nextDirection = 'down';
+                }
                 break;
             case 'ArrowUp':
-                direction = 'up';
+                if (currentDirection !== 'down') {
+                    nextDirection = 'up';
+                }
                 break;
             case 'ArrowLeft':
-                direction = 'left';
+                if (currentDirection !== 'right') {
+                    nextDirection = 'left';
+                }
                 break;
             case 'ArrowRight':
-                direction = 'right';
+                if (currentDirection !== 'left') {
+                    nextDirection = 'right';
+                }
                 break;
         }
-        tick();
     });
+
+    document.querySelector(".start-button").addEventListener('click', startGame);
+
+
 }
+
+export function startGame() {
+    setInterval(tick, 500);
+    document.querySelector(".start-button").removeEventListener('click', startGame);
+}
+
+export function getQueue() {
+    return model.getQueue();
+}
+
+export function tick() {
+    currentDirection = nextDirection;
+
+    const queue = getQueue();
+
+    const snakeHead = queue.tail;
+    let current = queue.head;
+    let newSnakeHead = { row: snakeHead.data.row, column: snakeHead.data.column };
+
+    while (current) {
+        writeToCell(current.data.row, current.data.column, 0);
+        current = current.next;
+    }
+
+    switch (currentDirection) {
+        case 'left':
+            newSnakeHead.column--;
+            if (newSnakeHead.column < 0) newSnakeHead.column = 19;
+            break;
+        case 'right':
+            newSnakeHead.column++;
+            if (newSnakeHead.column > 19) newSnakeHead.column = 0;
+            break;
+        case 'up':
+            newSnakeHead.row--;
+            if (newSnakeHead.row < 0) newSnakeHead.row = 19;
+            break;
+        case 'down':
+            newSnakeHead.row++;
+            if (newSnakeHead.row > 19) newSnakeHead.row = 0;
+            break;
+    }
+
+    queue.enqueue(newSnakeHead);
+    queue.dequeue();
+
+    current = queue.head;
+
+    while (current) {
+        writeToCell(current.data.row, current.data.column, 1);
+        current = current.next;
+    }
+
+    displayBoard(model);
+}
+
 
 export function displayBoard(model) {
     view.displayBoard(model);
 }
 
-export function tick() {
-
-    writeToCell(player.row, player.col, 0);
-
-    movePlayer();
-
-    writeToCell(player.row, player.col, 1);
-
-    displayBoard(model);
-
-    console.log(player);
-}
-
 export function writeToCell(row, column, value) {
     model.writeToCell(row, column, value);
-}
-
-function movePlayer() {
-    switch (direction) {
-        case 'left':
-            player.col--;
-            if (player.col < 0) {
-                player.col = columns - 1;
-            }
-            break;
-        case 'right':
-            player.col++;
-            if (player.col > columns - 1) {
-                player.col = 0;
-            }
-            break;
-        case 'up':
-            player.row--;
-            if (player.row < 0) {
-                player.row = rows - 1;
-            }
-            break;
-        case 'down':
-            player.row++;
-            if (player.row > rows - 1) {
-                player.row = 0;
-            }
-    }
 }

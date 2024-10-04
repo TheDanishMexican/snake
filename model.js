@@ -1,12 +1,14 @@
-import * as controller from './controller.js';
 import Queue from './queue.js';
 
 const model = createModel(20, 20);
+const queue = new Queue();
 
 export function start() {
     console.log("Model started");
-    const queue = new Queue();
 
+    queue.enqueue({ row: 9, column: 9 });
+    queue.enqueue({ row: 9, column: 10 });
+    queue.enqueue({ row: 9, column: 11 });
 }
 
 export function createModel(rows, columns) {
@@ -35,6 +37,6 @@ export function dump() {
     console.table(model);
 }
 
-export function tick() {
-    controller.tick();
+export function getQueue() {
+    return queue;
 }

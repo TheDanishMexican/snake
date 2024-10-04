@@ -5,6 +5,10 @@ export function start(rows, columns) {
     makeGrid(rows, columns);
 }
 
+export function tick() {
+    controller.tick();
+}
+
 export function makeGrid(rows, columns) {
     const table = document.querySelector(".grid-container");
 
@@ -28,7 +32,6 @@ export function displayBoard(model) {
     for (let row = 0; row < 20; row++) {
         for (let column = 0; column < 20; column++) {
             const index = row * 20 + column;
-
             switch (model.readFromCell(row, column)) {
                 case 0:
                     cells[index].classList.remove("snake", "food");

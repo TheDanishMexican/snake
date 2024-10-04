@@ -11,8 +11,23 @@ body {
 
 td {
     border: 1px solid black;
-    padding: 15px;
+    padding: 13px;
     background-color: rgb(52, 67, 80);
+}
+
+.start-button-container {
+    margin-top: 3vh;
+}
+
+.start-button {
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+.start-button:hover {
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
 }
 
 .snake {
