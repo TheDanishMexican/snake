@@ -16,8 +16,8 @@ export function generateFood() {
 }
 
 //SLETTES EFTER TEST
-export function getFoodPosition() {
-    return controller.getFoodPosition();
+export function eatFood() {
+    return controller.eatFood();
 }
 
 

@@ -2,7 +2,7 @@ export default class Grid {
     constructor(rows, columns) {
         this.rows = rows;
         this.columns = columns;
-        this.grid = Array.from({ length: rows }, () => Array(columns).fill(null));
+        this.grid = Array.from({ length: rows }, () => Array(columns).fill(0));
     }
 
     dump() {

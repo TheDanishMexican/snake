@@ -74,7 +74,9 @@ export function tick() {
     let newSnakeHead = { row: snakeHead.data.row, column: snakeHead.data.column };
 
     while (current) {
-        writeToCell(current.data.row, current.data.column, 0);
+        if (readFromCell(current.data.row, current.data.column) !== 2) {
+            writeToCell(current.data.row, current.data.column, 0);
+        }
         current = current.next;
     }
 
@@ -103,7 +105,9 @@ export function tick() {
     current = queue.head;
 
     while (current) {
-        writeToCell(current.data.row, current.data.column, 1);
+        if (readFromCell(current.data.row, current.data.column) !== 2) {
+            writeToCell(current.data.row, current.data.column, 1);
+        }
         current = current.next;
     }
 
@@ -120,7 +124,7 @@ export function writeToCell(row, column, value) {
 }
 
 export function readFromCell(rows, columns) {
-    model.readFromCell(rows, columns);
+    return model.readFromCell(rows, columns);
 }
 
 export function generateFood() {
@@ -130,8 +134,6 @@ export function generateFood() {
         foodRow = Math.floor(Math.random() * model.getRows());
         foodColumn = Math.floor(Math.random() * model.getColumns());
     } while (readFromCell(foodRow, foodColumn) != 0);
-
-
 
     writeToCell(foodRow, foodColumn, 2);
 }
@@ -156,18 +158,8 @@ export function eatFood() {
     const snakeHead = model.getTail(); // Current head of the snake
     const food = getFoodPosition(); // Function to retrieve the food position
 
-    console.log("snakeHead: ", snakeHead);
-
-    // Check if the snake has eaten the food
     if (snakeHead.data.row === food.row && snakeHead.data.column === food.column) {
-        // Add new segment to the snake at the new head position
-        queue.enqueue({ row: food.row, column: food.column });
-
-
-
-        // Generate new food
-        generateFood();
-
-        console.log('Food eaten!');
+        console.log("umnummnum");
     }
+
 }
