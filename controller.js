@@ -153,13 +153,18 @@ export function getFoodPosition() {
 
 export function eatFood() {
     const queue = getQueue();
-
-    // Get the positions of the snake's head and food
-    const snakeHead = model.getTail(); // Current head of the snake
-    const food = getFoodPosition(); // Function to retrieve the food position
+    const snakeHead = model.getTail();
+    const food = getFoodPosition();
 
     if (snakeHead.data.row === food.row && snakeHead.data.column === food.column) {
-        console.log("umnummnum");
-    }
+        console.log("umnummnum - Snake ate the food!");
 
+        writeToCell(food.row, food.column, 0);
+
+        generateFood();
+
+        const newHead = { row: snakeHead.data.row, column: snakeHead.data.column };
+        queue.enqueue(newHead);
+    }
 }
+
