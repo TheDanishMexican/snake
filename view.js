@@ -9,6 +9,11 @@ export function tick() {
     controller.tick();
 }
 
+export function generateFood() {
+    controller.generateFood();
+}
+
+
 export function makeGrid(rows, columns) {
     const table = document.querySelector(".grid-container");
 
@@ -29,8 +34,8 @@ export function makeGrid(rows, columns) {
 export function displayBoard(model) {
     const cells = document.querySelectorAll(".grid-container td");
 
-    for (let row = 0; row < 20; row++) {
-        for (let column = 0; column < 20; column++) {
+    for (let row = 0; row < model.getRows(); row++) {
+        for (let column = 0; column < model.getColumns(); column++) {
             const index = row * 20 + column;
             switch (model.readFromCell(row, column)) {
                 case 0:

@@ -1,42 +1,39 @@
 import Queue from './queue.js';
+import Grid from './grid.js';
 
-const model = createModel(20, 20);
+const rows = 30;
+const columns = 20;
+const grid = new Grid(rows, columns);
 const queue = new Queue();
 
 export function start() {
     console.log("Model started");
 
-    queue.enqueue({ row: 9, column: 9 });
-    queue.enqueue({ row: 9, column: 10 });
-    queue.enqueue({ row: 9, column: 11 });
-}
-
-export function createModel(rows, columns) {
-    const grid = [];
-
-    for (let i = 0; i < rows; i++) {
-        const row = [];
-        for (let j = 0; j < columns; j++) {
-            row.push(0);
-        }
-        grid.push(row);
-    }
-
-    return grid;
+    queue.enqueue({ row: 15, column: 9 });
+    queue.enqueue({ row: 15, column: 10 });
+    queue.enqueue({ row: 15, column: 11 });
 }
 
 export function writeToCell(row, column, value) {
-    model[row][column] = value;
+    grid.set(row, column, value);
 }
 
 export function readFromCell(row, column) {
-    return model[row][column];
+    return grid.get(row, column);
 }
 
 export function dump() {
-    console.table(model);
+    grid.dump();
 }
 
 export function getQueue() {
     return queue;
+}
+
+export function getRows() {
+    return grid.getRows();
+}
+
+export function getColumns() {
+    return grid.getColumns();
 }

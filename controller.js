@@ -12,7 +12,8 @@ export function start() {
 
     console.log("Controller started");
     model.start();
-    view.start(20, 20);
+    view.start(getRows(), getColumns());
+    generateFood();
 
     const queue = getQueue();
     let current = queue.head;
@@ -49,9 +50,7 @@ export function start() {
         }
     });
 
-    document.querySelector(".start-button").addEventListener('click', startGame);
-
-
+    // document.querySelector(".start-button").addEventListener('click', startGame);
 }
 
 export function startGame() {
@@ -64,6 +63,7 @@ export function getQueue() {
 }
 
 export function tick() {
+
     currentDirection = nextDirection;
 
     const queue = getQueue();
@@ -88,11 +88,11 @@ export function tick() {
             break;
         case 'up':
             newSnakeHead.row--;
-            if (newSnakeHead.row < 0) newSnakeHead.row = 19;
+            if (newSnakeHead.row < 0) newSnakeHead.row = 29;
             break;
         case 'down':
             newSnakeHead.row++;
-            if (newSnakeHead.row > 19) newSnakeHead.row = 0;
+            if (newSnakeHead.row > 29) newSnakeHead.row = 0;
             break;
     }
 
@@ -116,4 +116,30 @@ export function displayBoard(model) {
 
 export function writeToCell(row, column, value) {
     model.writeToCell(row, column, value);
+}
+
+export function readFromCell(rows, columns) {
+    model.readFromCell(rows, columns);
+}
+
+export function generateFood() {
+    let foodRow, foodColumn;
+
+    for (let i = 0; i < getRows(); i++) {
+        for (let j = 0; j < getColumns(); j++) {
+            foodRow = Math.floor(Math.random() * model.getRows());
+            foodColumn = Math.floor(Math.random() * model.getColumns());
+        }
+    }
+
+    writeToCell(foodRow, foodColumn, 2);
+}
+
+
+export function getRows() {
+    return model.getRows();
+}
+
+export function getColumns() {
+    return model.getColumns();
 }
