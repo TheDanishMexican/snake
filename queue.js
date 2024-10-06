@@ -57,6 +57,14 @@ export default class Queue {
 
         return current.data;
     }
+
+    getTail() {
+        return this.tail;
+    }
+
+    getHead() {
+        return this.head;
+    }
 }
 
 export class Node {

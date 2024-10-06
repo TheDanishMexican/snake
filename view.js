@@ -5,12 +5,19 @@ export function start(rows, columns) {
     makeGrid(rows, columns);
 }
 
+//SLETTES EFTER TEST
 export function tick() {
     controller.tick();
 }
 
+//SLETTES EFTER TEST
 export function generateFood() {
     controller.generateFood();
+}
+
+//SLETTES EFTER TEST
+export function getFoodPosition() {
+    return controller.getFoodPosition();
 }
 
 
@@ -36,6 +43,7 @@ export function displayBoard(model) {
 
     for (let row = 0; row < model.getRows(); row++) {
         for (let column = 0; column < model.getColumns(); column++) {
+            //fix hardcoded value here
             const index = row * 20 + column;
             switch (model.readFromCell(row, column)) {
                 case 0:

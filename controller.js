@@ -50,7 +50,7 @@ export function start() {
         }
     });
 
-    // document.querySelector(".start-button").addEventListener('click', startGame);
+    document.querySelector(".start-button").addEventListener('click', startGame);
 }
 
 export function startGame() {
@@ -63,6 +63,7 @@ export function getQueue() {
 }
 
 export function tick() {
+    eatFood();
 
     currentDirection = nextDirection;
 
@@ -125,12 +126,12 @@ export function readFromCell(rows, columns) {
 export function generateFood() {
     let foodRow, foodColumn;
 
-    for (let i = 0; i < getRows(); i++) {
-        for (let j = 0; j < getColumns(); j++) {
-            foodRow = Math.floor(Math.random() * model.getRows());
-            foodColumn = Math.floor(Math.random() * model.getColumns());
-        }
-    }
+    do {
+        foodRow = Math.floor(Math.random() * model.getRows());
+        foodColumn = Math.floor(Math.random() * model.getColumns());
+    } while (readFromCell(foodRow, foodColumn) != 0);
+
+
 
     writeToCell(foodRow, foodColumn, 2);
 }
@@ -142,4 +143,31 @@ export function getRows() {
 
 export function getColumns() {
     return model.getColumns();
+}
+
+export function getFoodPosition() {
+    return model.getFoodPosition();
+}
+
+export function eatFood() {
+    const queue = getQueue();
+
+    // Get the positions of the snake's head and food
+    const snakeHead = model.getTail(); // Current head of the snake
+    const food = getFoodPosition(); // Function to retrieve the food position
+
+    console.log("snakeHead: ", snakeHead);
+
+    // Check if the snake has eaten the food
+    if (snakeHead.data.row === food.row && snakeHead.data.column === food.column) {
+        // Add new segment to the snake at the new head position
+        queue.enqueue({ row: food.row, column: food.column });
+
+
+
+        // Generate new food
+        generateFood();
+
+        console.log('Food eaten!');
+    }
 }

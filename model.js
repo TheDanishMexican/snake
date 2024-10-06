@@ -37,3 +37,25 @@ export function getRows() {
 export function getColumns() {
     return grid.getColumns();
 }
+
+export function peek() {
+    return queue.peek();
+}
+
+export function getTail() {
+    return queue.getTail();
+}
+
+export function getHead() {
+    return queue.getHead();
+}
+
+export function getFoodPosition() {
+    for (let i = 0; i < getRows(); i++) {
+        for (let j = 0; j < getColumns(); j++) {
+            if (readFromCell(i, j) === 2) {
+                return { row: i, column: j };
+            };
+        }
+    }
+}
