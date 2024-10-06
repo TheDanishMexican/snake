@@ -2,4 +2,4 @@
 
 **Link til deployed app:**
 
-[https://thedanishmexican.github.io/snake/](#)
+https://thedanishmexican.github.io/snake/
